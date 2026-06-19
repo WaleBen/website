@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — Wale Ben</title>
+  <meta name="description" content="Wale Ben is a Berlin-based video editor and motion designer with 7 years of experience working with brands, agencies, and creative teams." />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* ---- Page header ---- */
+    .page-header {
+      padding-top: calc(var(--nav-h) + 80px);
+      padding-bottom: 80px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ---- Bio section ---- */
+    .bio {
+      padding-block: 96px;
+    }
+
+    .bio__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    @media (max-width: 800px) {
+      .bio__grid {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+    }
+
+    .bio__photo-wrap {
+      position: relative;
+    }
+
+    .bio__photo {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      border-radius: 4px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      display: block;
+    }
+
+    /* Placeholder when no photo */
+    .bio__photo-placeholder {
+      width: 100%;
+      aspect-ratio: 4/5;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .bio__photo-accent {
+      position: absolute;
+      bottom: -16px;
+      right: -16px;
+      width: 120px;
+      height: 120px;
+      border: 1px solid var(--accent);
+      border-radius: 4px;
+      z-index: -1;
+    }
+
+    .bio__tag {
+      display: inline-block;
+      margin-top: 24px;
+      padding: 8px 16px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+    .bio__tag span { color: var(--accent); }
+
+    .bio__text p {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+    .bio__text p:last-child { margin-bottom: 0; }
+
+    .bio__text strong {
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    /* ---- Stats row ---- */
+    .stats {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding-block: 0;
+    }
+
+    .stats__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    @media (max-width: 700px) {
+      .stats__grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .stats__item {
+      padding: 40px 32px;
+      border-right: 1px solid var(--border);
+      text-align: center;
+    }
+    .stats__item:last-child { border-right: none; }
+
+    @media (max-width: 700px) {
+      .stats__item:nth-child(2) { border-right: none; }
+      .stats__item:nth-child(3) { border-top: 1px solid var(--border); }
+    }
+
+    .stats__number {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      font-weight: 300;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .stats__label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* ---- Skills ---- */
+    .skills {
+      padding-block: 96px;
+      background: var(--bg-surface);
+    }
+
+    .skills__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 56px;
+    }
+
+    @media (max-width: 800px) {
+      .skills__grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .skills__grid { grid-template-columns: 1fr; }
+    }
+
+    .skill-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 28px 24px;
+      transition: border-color var(--transition);
+    }
+    .skill-card:hover { border-color: var(--accent-dim); }
+
+    .skill-card__icon {
+      font-size: 1.5rem;
+      margin-bottom: 14px;
+    }
+
+    .skill-card__name {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .skill-card__tools {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ---- Education ---- */
+    .education {
+      padding-block: 96px;
+    }
+
+    .education__list {
+      margin-top: 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .edu-item {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 32px;
+      padding-block: 36px;
+      border-bottom: 1px solid var(--border);
+      align-items: start;
+    }
+    .edu-item:first-child { border-top: 1px solid var(--border); }
+
+    @media (max-width: 600px) {
+      .edu-item { grid-template-columns: 1fr; gap: 8px; }
+    }
+
+    .edu-item__year {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding-top: 4px;
+    }
+
+    .edu-item__degree {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .edu-item__school {
+      font-size: 0.85rem;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .edu-item__desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ---- CTA ---- */
+    .about-cta {
+      text-align: center;
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" aria-label="Main navigation">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo"><img src="images/logo.png" alt="Wale Ben" style="height:44px;width:auto;display:block;" /></a>
+      <ul class="nav__links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="portfolio.html">Portfolio</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="nav__cta">
+        <a href="contact.html" class="btn btn-outline" style="padding:10px 20px;">Let's Work Together</a>
+      </div>
+      <button class="nav__toggle" aria-label="Toggle mobile menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+
+  <!-- PAGE HEADER -->
+  <header class="page-header">
+    <div class="container">
+      <p class="section-label">The Person Behind the Work</p>
+      <h1 class="section-heading">About Me</h1>
+      <p class="section-sub">Video editor, motion designer, and storyteller — based in Berlin, working globally.</p>
+    </div>
+  </header>
+
+
+  <!-- BIO -->
+  <section class="bio">
+    <div class="container">
+      <div class="bio__grid">
+
+        <!-- Photo -->
+        <div class="bio__photo-wrap">
+          <!-- TODO: Replace with your actual photo -->
+          <div class="bio__photo-placeholder">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" opacity="0.3">
+              <circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+            </svg>
+            <span>Photo coming soon</span>
+          </div>
+          <div class="bio__photo-accent"></div>
+          <div class="bio__tag">📍 Berlin, Germany &nbsp;·&nbsp; <span>Available for projects</span></div>
+        </div>
+
+        <!-- Text -->
+        <div class="bio__text">
+          <p class="section-label">My Story</p>
+          <h2 class="section-heading" style="margin-bottom:28px;">Crafting stories<br>that move people.</h2>
+
+          <p>
+            I'm <strong>Wale Ben</strong> — a video editor and motion designer with <strong>7 years of hands-on experience</strong> working with brands, agencies, and creative teams across Europe and beyond.
+          </p>
+          <p>
+            My path into this work started somewhere unexpected — studying <strong>English Language</strong> in Nigeria, where I developed a deep appreciation for how stories are structured and how words carry weight. That foundation didn't go to waste. It quietly shaped how I think about narrative, pacing, and the emotional arc of every project I touch.
+          </p>
+          <p>
+            I moved into motion design and video editing by obsession — teaching myself the craft, then doing the work. Over time, I've built a practice that spans <strong>corporate films, social media campaigns, explainer videos, product demos, and documentary editing</strong>. My clients range from property companies and software startups to lifestyle brands and ad agencies.
+          </p>
+          <p>
+            I later earned an <strong>MBA in Marketing</strong> from the Berlin School of Business and Innovation, which deepened how I think about the business side of creative work — not just what looks good, but what actually drives results for clients.
+          </p>
+          <p>
+            Based in <strong>Berlin</strong>, I work with clients locally and remotely. Whether you need a polished corporate film or a fast-turnaround social ad, I bring the same level of craft and intention to every frame.
+          </p>
+
+          <div class="divider"></div>
+          <a href="contact.html" class="btn btn-primary">Start a Project</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="container" style="padding:0">
+      <div class="stats__grid">
+        <div class="stats__item">
+          <div class="stats__number">7+</div>
+          <div class="stats__label">Years Experience</div>
+        </div>
+        <div class="stats__item">
+          <div class="stats__number">50+</div>
+          <div class="stats__label">Projects Delivered</div>
+        </div>
+        <div class="stats__item">
+          <div class="stats__number">30+</div>
+          <div class="stats__label">Ad Campaigns</div>
+        </div>
+        <div class="stats__item">
+          <div class="stats__number">3</div>
+          <div class="stats__label">Continents Served</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- SKILLS -->
+  <section class="skills">
+    <div class="container">
+      <p class="section-label">What I Do</p>
+      <h2 class="section-heading">Skills & Expertise</h2>
+
+      <div class="skills__grid">
+        <div class="skill-card">
+          <div class="skill-card__icon">🎬</div>
+          <div class="skill-card__name">Video Editing</div>
+          <div class="skill-card__tools">Narrative editing, pacing, colour grading, sound design, multicam. Delivered for corporate, documentary, and branded content.</div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-card__icon">✦</div>
+          <div class="skill-card__name">Motion Design</div>
+          <div class="skill-card__tools">Kinetic typography, animated logos, motion graphics, 2D animation. From brand identity to full explainer sequences.</div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-card__icon">📱</div>
+          <div class="skill-card__name">Social Media Video</div>
+          <div class="skill-card__tools">Short-form ads, reels, UGC edits, platform-optimised formats for Meta, Instagram, TikTok, and YouTube.</div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-card__icon">💡</div>
+          <div class="skill-card__name">Explainer & Demo Videos</div>
+          <div class="skill-card__tools">SaaS product demos, app walkthroughs, animated explainers. Turning complex products into clear, compelling video.</div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-card__icon">🎙</div>
+          <div class="skill-card__name">Interview & Event Coverage</div>
+          <div class="skill-card__tools">Multi-camera event editing, talking head interviews, documentary sequences, and corporate event highlights.</div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-card__icon">🧠</div>
+          <div class="skill-card__name">Strategy & Marketing</div>
+          <div class="skill-card__tools">MBA-backed understanding of brand positioning, audience targeting, and how creative output connects to business goals.</div>
+        </div>
+      </div>
+
+      <div style="margin-top:40px;">
+        <p class="section-label" style="margin-bottom:12px;">Tools</p>
+        <p style="font-size:0.85rem; color:var(--text-secondary); line-height:1.8;">
+          Adobe Premiere Pro &nbsp;·&nbsp; After Effects &nbsp;·&nbsp; DaVinci Resolve &nbsp;·&nbsp; Adobe Audition &nbsp;·&nbsp; Photoshop &nbsp;·&nbsp; Illustrator &nbsp;·&nbsp; Cinema 4D
+        </p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- EDUCATION -->
+  <section class="education">
+    <div class="container">
+      <p class="section-label">Background</p>
+      <h2 class="section-heading">Education</h2>
+
+      <div class="education__list">
+        <div class="edu-item">
+          <div class="edu-item__year">2020 – 2022</div>
+          <div>
+            <div class="edu-item__degree">MBA — Marketing</div>
+            <div class="edu-item__school">Berlin School of Business and Innovation · Berlin, Germany</div>
+            <div class="edu-item__desc">Postgraduate study in marketing strategy, brand management, consumer behaviour, and digital marketing — providing a strong commercial foundation for creative work.</div>
+          </div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-item__year">Earlier</div>
+          <div>
+            <div class="edu-item__degree">B.A. — English Language</div>
+            <div class="edu-item__school">Nigeria</div>
+            <div class="edu-item__desc">Undergraduate study in English Language, building deep skills in communication, narrative structure, and how language shapes meaning — foundations that directly inform storytelling in video.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- CTA -->
+  <section class="about-cta section">
+    <div class="container">
+      <p class="section-label">Let's Work Together</p>
+      <h2 class="section-heading">Ready to make something great?</h2>
+      <p class="section-sub" style="margin:0 auto 36px;">I'm open to freelance projects, long-term collaborations, and agency partnerships.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:14px;justify-content:center;">
+        <a href="contact.html" class="btn btn-primary">Get in Touch</a>
+        <a href="portfolio.html" class="btn btn-outline">View Portfolio</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <a href="index.html" class="footer__logo"><img src="images/logo.png" alt="Wale Ben" style="height:36px;width:auto;display:block;" /></a>
+        <ul class="footer__links">
+          <li><a href="portfolio.html">Portfolio</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="https://vimeo.com/waleben" target="_blank" rel="noopener">Vimeo ↗</a></li>
+        </ul>
+        <p class="footer__copy">© 2024 Wale Ben · Berlin</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

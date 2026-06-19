@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wale Ben — Video Editor & Motion Designer, Berlin</title>
+  <meta name="description" content="Wale Ben — Berlin-based video editor and motion designer with 7 years of experience across corporate, social media, and branded content." />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* ---- Hero ---- */
+    .hero {
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding-bottom: 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero__bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 60% 40%, rgba(255,50,37,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 80% at 10% 80%, rgba(255,50,37,0.04) 0%, transparent 60%);
+    }
+
+    .hero__noise {
+      position: absolute;
+      inset: 0;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px;
+    }
+
+    .hero__content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero__eyebrow {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .hero__title {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 300;
+      line-height: 1.02;
+      letter-spacing: -0.01em;
+      margin-bottom: 24px;
+    }
+
+    .hero__title strong {
+      font-weight: 600;
+      display: block;
+    }
+
+    .hero__sub {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      max-width: 480px;
+      margin-bottom: 40px;
+      line-height: 1.7;
+    }
+
+    .hero__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .hero__scroll {
+      position: absolute;
+      bottom: 32px;
+      right: 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      z-index: 2;
+    }
+
+    .hero__scroll-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(0.7); }
+    }
+
+    /* ---- Reel section ---- */
+    .reel {
+      background: var(--bg);
+      padding-block: 0 80px;
+    }
+
+    .reel__inner {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+    }
+
+    .reel__label {
+      padding: 14px 20px;
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .reel__dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .reel__label span {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+    }
+
+    /* ---- Featured Projects ---- */
+    .featured {
+      background: var(--bg-surface);
+    }
+
+    .featured__header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 56px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .featured__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    @media (max-width: 900px) {
+      .featured__grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 560px) {
+      .featured__grid { grid-template-columns: 1fr; }
+    }
+
+    /* ---- Services strip ---- */
+    .services {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding-block: 48px;
+    }
+
+    .services__list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0;
+    }
+
+    .services__item {
+      flex: 1;
+      min-width: 160px;
+      padding: 24px 28px;
+      border-right: 1px solid var(--border);
+    }
+    .services__item:last-child { border-right: none; }
+
+    .services__icon {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+
+    .services__name {
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: var(--text-primary);
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 700px) {
+      .services__item {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+      .services__item:last-child { border-bottom: none; }
+    }
+
+    /* ---- CTA band ---- */
+    .cta-band {
+      text-align: center;
+    }
+
+    .cta-band__title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3.8rem);
+      font-weight: 300;
+      margin-bottom: 20px;
+    }
+
+    .cta-band__sub {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      margin-bottom: 40px;
+    }
+
+    .cta-band__actions {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================
+       NAVIGATION
+       ============================================================ -->
+  <nav class="nav" aria-label="Main navigation">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo"><img src="images/logo.png" alt="Wale Ben" style="height:44px;width:auto;display:block;" /></a>
+
+      <ul class="nav__links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="portfolio.html">Portfolio</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+
+      <div class="nav__cta">
+        <a href="contact.html" class="btn btn-outline" style="padding:10px 20px;">Let's Work Together</a>
+      </div>
+
+      <button class="nav__toggle" aria-label="Toggle mobile menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+
+  <!-- ============================================================
+       HERO
+       ============================================================ -->
+  <section class="hero">
+    <div class="hero__bg"></div>
+    <div class="hero__noise"></div>
+
+    <div class="container hero__content">
+      <p class="hero__eyebrow">Video Editor &amp; Motion Designer · Berlin</p>
+      <h1 class="hero__title">
+        Wale<br>
+        <strong>Ben.</strong>
+      </h1>
+      <p class="hero__sub">
+        Crafting cinematic stories and motion-driven experiences for brands,
+        agencies, and creative teams — for over 7 years.
+      </p>
+      <div class="hero__actions">
+        <a href="portfolio.html" class="btn btn-primary">View Portfolio</a>
+        <a href="#reel" class="btn btn-outline">Watch Reel</a>
+      </div>
+    </div>
+
+    <div class="hero__scroll" aria-hidden="true">
+      <div class="hero__scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       SHOWREEL
+       ============================================================ -->
+  <section class="reel section" id="reel">
+    <div class="container">
+      <p class="section-label">2024 Showreel</p>
+      <h2 class="section-heading" style="margin-bottom:40px;">The Work, in Motion</h2>
+
+      <div class="reel__inner">
+        <div class="reel__label">
+          <div class="reel__dot"></div>
+          <span>Wale Ben — Showreel 2024</span>
+        </div>
+        <div class="video-wrap">
+          <iframe src="https://player.vimeo.com/video/1095729680?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Motion and Video Portfolio"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       SERVICES STRIP
+       ============================================================ -->
+  <div class="services">
+    <div class="container">
+      <div class="services__list">
+        <div class="services__item">
+          <div class="services__icon">🎬</div>
+          <div class="services__name">Corporate Video</div>
+        </div>
+        <div class="services__item">
+          <div class="services__icon">✦</div>
+          <div class="services__name">Motion Design</div>
+        </div>
+        <div class="services__item">
+          <div class="services__icon">📱</div>
+          <div class="services__name">Social Content</div>
+        </div>
+        <div class="services__item">
+          <div class="services__icon">💡</div>
+          <div class="services__name">Explainer Video</div>
+        </div>
+        <div class="services__item">
+          <div class="services__icon">🎙</div>
+          <div class="services__name">Interview &amp; Event</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ============================================================
+       FEATURED PROJECTS
+       ============================================================ -->
+  <section class="featured section">
+    <div class="container">
+      <div class="featured__header">
+        <div>
+          <p class="section-label">Selected Work</p>
+          <h2 class="section-heading">Featured Projects</h2>
+          <p class="section-sub">A snapshot of recent work across brands, agencies, and personal projects.</p>
+        </div>
+        <a href="portfolio.html" class="btn btn-outline">All Projects →</a>
+      </div>
+
+      <div class="featured__grid">
+
+        <!-- Project 1: Marlin Immobilien -->
+        <article class="project-card" style="cursor:pointer;" onclick="window.location='portfolio.html'">
+          <div class="project-card__thumb">
+            <img id="thumb-marlin" src="" alt="Marlin Immobilien" style="width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 0.3s" />
+            <div style="position:absolute;inset:0;background:linear-gradient(135deg,#1a1a1a,#0f0f0f);z-index:-1"></div>
+            <div class="project-card__play">
+              <div class="project-card__play-icon">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><polygon points="5,3 19,12 5,21"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="project-card__body">
+            <p class="project-card__category">Corporate Videos</p>
+            <h3 class="project-card__title">Marlin Immobilien</h3>
+            <p class="project-card__desc">Real estate video for a Swiss property company, produced using 3D architectural models.</p>
+          </div>
+        </article>
+
+        <!-- Project 2: Bring To Me App -->
+        <article class="project-card" style="cursor:pointer;" onclick="window.location='portfolio.html'">
+          <div class="project-card__thumb">
+            <img id="thumb-bringtome" src="" alt="Bring To Me App" style="width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 0.3s" />
+            <div style="position:absolute;inset:0;background:linear-gradient(135deg,#181818,#0f0f0f);z-index:-1"></div>
+            <div class="project-card__play">
+              <div class="project-card__play-icon">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><polygon points="5,3 19,12 5,21"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="project-card__body">
+            <p class="project-card__category">Explainer Videos</p>
+            <h3 class="project-card__title">Bring To Me App</h3>
+            <p class="project-card__desc">Motion graphics explainer for a SaaS company, built to communicate the product's core value at a glance.</p>
+          </div>
+        </article>
+
+        <!-- Project 3: Pets Are Kids -->
+        <article class="project-card" style="cursor:pointer;" onclick="window.location='portfolio.html'">
+          <div class="project-card__thumb">
+            <img id="thumb-pets" src="" alt="Pets Are Kids" style="width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 0.3s" />
+            <div style="position:absolute;inset:0;background:linear-gradient(135deg,#161616,#0f0f0f);z-index:-1"></div>
+            <div class="project-card__play">
+              <div class="project-card__play-icon">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><polygon points="5,3 19,12 5,21"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="project-card__body">
+            <p class="project-card__category">Social Media Video Content</p>
+            <h3 class="project-card__title">Pets Are Kids</h3>
+            <p class="project-card__desc">One of 30+ Facebook ads for a pet feed brand — campaign generated over a 300% increase in leads.</p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       CTA BAND
+       ============================================================ -->
+  <section class="cta-band section">
+    <div class="container">
+      <p class="section-label">Let's Talk</p>
+      <h2 class="cta-band__title">
+        Got a project in mind?<br>
+        <span class="accent">Let's make it happen.</span>
+      </h2>
+      <p class="cta-band__sub">
+        Whether it's a brand film, product demo, or full motion campaign —<br>
+        I'd love to hear what you're building.
+      </p>
+      <div class="cta-band__actions">
+        <a href="contact.html" class="btn btn-primary">Start a Conversation</a>
+        <a href="about.html" class="btn btn-outline">Learn More About Me</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <a href="index.html" class="footer__logo"><img src="images/logo.png" alt="Wale Ben" style="height:36px;width:auto;display:block;" /></a>
+
+        <ul class="footer__links">
+          <li><a href="portfolio.html">Portfolio</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <!-- TODO: Add real Vimeo/social links -->
+          <li><a href="https://vimeo.com/waleben" target="_blank" rel="noopener">Vimeo ↗</a></li>
+        </ul>
+
+        <p class="footer__copy">© 2024 Wale Ben · Berlin</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://player.vimeo.com/api/player.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    // Load Vimeo thumbnails for featured cards
+    const thumbs = [
+      { id: '1176162412', el: 'thumb-marlin' },
+      { id: '848379677',  el: 'thumb-bringtome' },
+      { id: '1045302874', el: 'thumb-pets' },
+    ];
+    thumbs.forEach(({ id, el }) => {
+      fetch(`https://vimeo.com/api/v2/video/${id}.json`)
+        .then(r => r.json())
+        .then(data => {
+          const img = document.getElementById(el);
+          const src = data[0]?.thumbnail_large || data[0]?.thumbnail_medium;
+          if (img && src) { img.src = src; img.style.opacity = '1'; }
+        })
+        .catch(() => {});
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__Claude_Preview__preview_start",
+      "Bash(find /Users/ebenezerolorunfemi/Desktop/wale-ben-website -name \"*.pdf\" 2>/dev/null; find /Users/ebenezerolorunfemi/Desktop -name \"*.pdf\" 2>/dev/null)"
+    ]
+  }
+}

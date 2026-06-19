@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portfolio — Wale Ben</title>
+  <meta name="description" content="Selected video editing and motion design work by Wale Ben — corporate, social media, explainer, event and demo videos." />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* ---- Page header ---- */
+    .page-header {
+      padding-top: calc(var(--nav-h) + 80px);
+      padding-bottom: 64px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* ---- Filters ---- */
+    .filters {
+      padding-block: 40px;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: var(--nav-h);
+      background: rgba(13,13,13,0.96);
+      backdrop-filter: blur(12px);
+      z-index: 50;
+    }
+
+    .filters__inner {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .filter-btn {
+      padding: 8px 18px;
+      border-radius: 2px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-secondary);
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    .filter-btn:hover {
+      border-color: var(--accent-dim);
+      color: var(--text-primary);
+    }
+    .filter-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #0d0d0d;
+    }
+
+    /* ---- Grid ---- */
+    .portfolio-section {
+      padding-block: 64px;
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    @media (max-width: 960px) {
+      .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 560px) {
+      .portfolio-grid { grid-template-columns: 1fr; }
+    }
+
+    .portfolio-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color var(--transition), transform var(--transition), opacity 0.3s ease;
+    }
+    .portfolio-card:hover {
+      border-color: var(--accent-dim);
+      transform: translateY(-4px);
+    }
+    .portfolio-card.hidden {
+      display: none;
+    }
+
+    .portfolio-card__thumb {
+      position: relative;
+      aspect-ratio: 16/9;
+      background: #111;
+      overflow: hidden;
+    }
+
+    /* Vimeo thumbnail via oEmbed — fallback gradient */
+    .portfolio-card__thumb-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    .portfolio-card:hover .portfolio-card__thumb-img {
+      transform: scale(1.04);
+    }
+
+    .portfolio-card__thumb-fallback {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .portfolio-card__overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.35);
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+    .portfolio-card:hover .portfolio-card__overlay { opacity: 1; }
+
+    .play-btn {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .play-btn svg {
+      width: 20px;
+      height: 20px;
+      fill: #0d0d0d;
+      margin-left: 4px;
+    }
+
+    .portfolio-card__body {
+      padding: 18px 20px 22px;
+    }
+    .portfolio-card__cat {
+      font-size: 0.67rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+    .portfolio-card__title {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+    .portfolio-card__desc {
+      font-size: 0.83rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
+
+    /* ---- Modal ---- */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.88);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .modal-backdrop.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal {
+      width: 100%;
+      max-width: 900px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      transform: translateY(16px);
+      transition: transform 0.25s ease;
+    }
+    .modal-backdrop.open .modal {
+      transform: translateY(0);
+    }
+
+    .modal__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .modal__title {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+    .modal__close {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 1.4rem;
+      line-height: 1;
+      padding: 4px 8px;
+      transition: color var(--transition);
+    }
+    .modal__close:hover { color: var(--text-primary); }
+
+    .modal__video {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      background: #000;
+    }
+    .modal__video iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
+
+    .modal__footer {
+      padding: 16px 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .modal__cat {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+    .modal__desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" aria-label="Main navigation">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo"><img src="images/logo.png" alt="Wale Ben" style="height:44px;width:auto;display:block;" /></a>
+      <ul class="nav__links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="portfolio.html">Portfolio</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="nav__cta">
+        <a href="contact.html" class="btn btn-outline" style="padding:10px 20px;">Let's Work Together</a>
+      </div>
+      <button class="nav__toggle" aria-label="Toggle mobile menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+
+  <!-- PAGE HEADER -->
+  <header class="page-header">
+    <div class="container">
+      <p class="section-label">Selected Work</p>
+      <h1 class="section-heading">Portfolio</h1>
+      <p class="section-sub">7 years of video editing and motion design — corporate films, social campaigns, explainers, and everything in between.</p>
+    </div>
+  </header>
+
+
+  <!-- FILTERS -->
+  <div class="filters">
+    <div class="container">
+      <div class="filters__inner">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="corporate">Corporate Videos</button>
+        <button class="filter-btn" data-filter="social">Social Media</button>
+        <button class="filter-btn" data-filter="explainer">Explainer Videos</button>
+        <button class="filter-btn" data-filter="event">Event Coverage</button>
+        <button class="filter-btn" data-filter="demo">Demonstration Videos</button>
+        <button class="filter-btn" data-filter="motion">Motion Design</button>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- PORTFOLIO GRID -->
+  <section class="portfolio-section">
+    <div class="container">
+      <div class="portfolio-grid" id="portfolioGrid">
+
+        <!-- 1. Marlin Immobilien -->
+        <article class="portfolio-card" data-category="corporate"
+          data-title="Marlin Immobilien"
+          data-cat-label="Corporate Videos"
+          data-desc="Real estate video produced for Swiss-based Marlin Immobilien property company, built using 3D architectural models."
+          data-vimeo-id="1176162412"
+          data-vimeo-hash="2c38521645">
+          <div class="portfolio-card__thumb">
+            <div class="portfolio-card__thumb-fallback"></div>
+            <img class="portfolio-card__thumb-img" src="" alt="Marlin Immobilien thumbnail" style="opacity:0" />
+            <div class="portfolio-card__overlay">
+              <div class="play-btn">
+                <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="portfolio-card__body">
+            <p class="portfolio-card__cat">Corporate Videos</p>
+            <h2 class="portfolio-card__title">Marlin Immobilien</h2>
+            <p class="portfolio-card__desc">Real estate video produced for a Swiss property company using 3D architectural models.</p>
+          </div>
+        </article>
+
+        <!-- 2. Pivit Global Amsterdam -->
+        <article class="portfolio-card" data-category="corporate"
+          data-title="PiviT Global Amsterdam"
+          data-cat-label="Corporate Videos"
+          data-desc="One of several filmed and edited videos for PiviT Global Software Company from their Amsterdam branch opening."
+          data-vimeo-id="1045322221">
+          <div class="portfolio-card__thumb">
+            <div class="portfolio-card__thumb-fallback"></div>
+            <img class="portfolio-card__thumb-img" src="" alt="PiviT Global Amsterdam thumbnail" style="opacity:0" />
+            <div class="portfolio-card__overlay">
+              <div class="play-btn">
+                <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="portfolio-card__body">
+            <p class="portfolio-card__cat">Corporate Videos</p>
+            <h2 class="portfolio-card__title">PiviT Global Amsterdam</h2>
+            <p class="portfolio-card__desc">One of several videos produced for PiviT Global Software Company at their Amsterdam branch opening.</p>
+          </div>
+        </article>
+
+        <!-- 3. Skinnify Yoga Pant -->
+        <article class="portfolio-card" data-category="social"
+          data-title="Skinnify Yoga Pant Ad"
+          data-cat-label="Social Media Video Content"
+          data-desc="Promotional video for female sportswear brand Skinnify, combining available video assets, motion graphics, and UGC content."
+          data-vimeo-id="1137218762">
+          <div class="portfolio-card__thumb">
+            <div class="portfolio-card__thumb-fallback"></div>
+            <img class="portfolio-card__thumb-img" src="" alt="Skinnify Yoga Pant Ad thumbnail" style="opacity:0" />
+            <div class="portfolio-card__overlay">
+              <div class="play-btn">
+                <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="portfolio-card__body">
+            <p class="portfolio-card__cat">Social Media Video Content</p>
+            <h2 class="portfolio-card__title">Skinnify Yoga Pant Ad</h2>
+            <p class="portfolio-card__desc">Promotional video for a female sportswear brand, using video assets, motion graphics, and UGC content.</p>
+          </div>
+        </article>
+
+        <!-- 4. Pets Are Kids -->
+        <article class="portfolio-card" data-category="social"
+          data-title="Pets Are Kids"
+          data-cat-label="Social Media Video Content"
+          data-desc="One of over 30 Facebook ads produced for a pet feed company — this campaign generated over a 300% increase in leads."
+          data-vimeo-id="1045302874">
+          <div class="portfolio-card__thumb">
+            <div class="portfolio-card__thumb-fallback"></div>
+            <img class="portfolio-card__thumb-img" src="" alt="Pets Are Kids thumbnail" style="opacity:0" />
+            <div class="portfolio-card__overlay">
+              <div class="play-btn">
+                <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="portfolio-card__body">
+            <p class="portfolio-card__cat">Social Media Video Content</p>
+            <h2 class="portfolio-card__title">Pets Are Kids</h2>
+            <p class="portfolio-card__desc">One of 30+ Facebook ads for a pet feed company — this campaign drove over a 300% increase in leads.</p>
+          </div>
+        </article>
+
+        <!-- 5. Bring To Me App -->
+        <article class="portfolio-card" data-category="explainer"
+          data-title="Bring To Me App"
+          data-cat-label="Explainer Videos"
+          data-desc="Explainer video for a SaaS company, created entirely with motion graphics and animation to communicate the product's value proposition."
+          data-vimeo-id="848379677">
+          <div class="portfolio-card__thumb">
+            <div class="portfolio-card__thumb-fallback"></div>
+            <img class="portfolio-card__thumb-img" src="" alt="Bring To Me App thumbnail" style="opacity:0" />
+            <div class="portfolio-card__overlay">
+              <div class="play-btn">
+                <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="portfolio-card__body">
+            <p class="portfolio-card__cat">Explainer Videos</p>
+            <h2 class="portfolio-card__title">Bring To Me App</h2>
+            <p class="portfolio-card__desc">Motion graphics explainer for a SaaS company, built to communicate the product's core value at a glance.</p>
+          </div>
+        </article>
+
+        <!-- 6. Opening Montage -->
+        <article class="portfolio-card" data-category="event"
+          data-title="Opening Montage"
+          data-cat-label="Event Coverage"
+          data-desc="Opening sequence for a lifestyle documentary following a Black family growing up in the Deep South of America in the 1960s and 70s."
+          data-vimeo-id="979177694">
+          <div class="portfolio-card__thumb">
+            <div class="portfolio-card__thumb-fallback"></div>
+            <img class="portfolio-card__thumb-img" src="" alt="Opening Montage thumbnail" style="opacity:0" />
+            <div class="portfolio-card__overlay">
+              <div class="play-btn">
+                <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="portfolio-card__body">
+            <p class="portfolio-card__cat">Event Coverage</p>
+            <h2 class="portfolio-card__title">Opening Montage</h2>
+            <p class="portfolio-card__desc">Opening sequence for a lifestyle documentary about a Black family in the American Deep South, 1960s–70s.</p>
+          </div>
+        </article>
+
+        <!-- 7. Wabel Dashboard Video -->
+        <article class="portfolio-card" data-category="demo"
+          data-title="Wabel Dashboard Video"
+          data-cat-label="Demonstration Videos"
+          data-desc="A product demonstration video created for a SaaS company, showcasing the platform's dashboard and key features."
+          data-vimeo-id="882139298">
+          <div class="portfolio-card__thumb">
+            <div class="portfolio-card__thumb-fallback"></div>
+            <img class="portfolio-card__thumb-img" src="" alt="Wabel Dashboard Video thumbnail" style="opacity:0" />
+            <div class="portfolio-card__overlay">
+              <div class="play-btn">
+                <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="portfolio-card__body">
+            <p class="portfolio-card__cat">Demonstration Videos</p>
+            <h2 class="portfolio-card__title">Wabel Dashboard Video</h2>
+            <p class="portfolio-card__desc">Product demonstration video for a SaaS company, showcasing platform features and user interface flows.</p>
+          </div>
+        </article>
+
+        <!-- 8. Be the Ice Sculptor -->
+        <article class="portfolio-card" data-category="motion"
+          data-title="Be the Ice Sculptor"
+          data-cat-label="Motion Design"
+          data-desc="Personal motion design project exploring kinetic typography and abstract visual storytelling."
+          data-vimeo-id="800969421">
+          <div class="portfolio-card__thumb">
+            <div class="portfolio-card__thumb-fallback"></div>
+            <img class="portfolio-card__thumb-img" src="" alt="Be the Ice Sculptor thumbnail" style="opacity:0" />
+            <div class="portfolio-card__overlay">
+              <div class="play-btn">
+                <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="portfolio-card__body">
+            <p class="portfolio-card__cat">Motion Design</p>
+            <h2 class="portfolio-card__title">Be the Ice Sculptor</h2>
+            <p class="portfolio-card__desc">Personal motion design project exploring kinetic typography and abstract visual storytelling.</p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- CTA -->
+  <section class="section" style="border-top:1px solid var(--border); text-align:center;">
+    <div class="container">
+      <p class="section-label">Next Step</p>
+      <h2 class="section-heading">Like what you see?</h2>
+      <p class="section-sub" style="margin:0 auto 36px;">Let's talk about your next project.</p>
+      <a href="contact.html" class="btn btn-primary">Get in Touch</a>
+    </div>
+  </section>
+
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__inner">
+        <a href="index.html" class="footer__logo"><img src="images/logo.png" alt="Wale Ben" style="height:36px;width:auto;display:block;" /></a>
+        <ul class="footer__links">
+          <li><a href="portfolio.html">Portfolio</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="https://vimeo.com/waleben" target="_blank" rel="noopener">Vimeo ↗</a></li>
+        </ul>
+        <p class="footer__copy">© 2024 Wale Ben · Berlin</p>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- VIDEO MODAL -->
+  <div class="modal-backdrop" id="videoModal" role="dialog" aria-modal="true" aria-label="Video player">
+    <div class="modal">
+      <div class="modal__header">
+        <span class="modal__title" id="modalTitle"></span>
+        <button class="modal__close" id="modalClose" aria-label="Close video">&times;</button>
+      </div>
+      <div class="modal__video" id="modalVideo"></div>
+      <div class="modal__footer">
+        <div>
+          <p class="modal__cat" id="modalCat"></p>
+          <p class="modal__desc" id="modalDesc"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="https://player.vimeo.com/api/player.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    // ---- Filter logic ----
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.portfolio-card');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const filter = btn.dataset.filter;
+        cards.forEach(card => {
+          if (filter === 'all' || card.dataset.category === filter) {
+            card.classList.remove('hidden');
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+      });
+    });
+
+    // ---- Load Vimeo thumbnails ----
+    cards.forEach(card => {
+      const id = card.dataset.vimeoId;
+      if (!id) return;
+      const img = card.querySelector('.portfolio-card__thumb-img');
+      fetch(`https://vimeo.com/api/v2/video/${id}.json`)
+        .then(r => r.json())
+        .then(data => {
+          const thumb = data[0]?.thumbnail_large || data[0]?.thumbnail_medium;
+          if (thumb && img) {
+            img.src = thumb;
+            img.style.opacity = '1';
+          }
+        })
+        .catch(() => {});
+    });
+
+    // ---- Modal logic ----
+    const modal = document.getElementById('videoModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalCat = document.getElementById('modalCat');
+    const modalDesc = document.getElementById('modalDesc');
+    const modalVideo = document.getElementById('modalVideo');
+    const modalClose = document.getElementById('modalClose');
+
+    function openModal(card) {
+      const id = card.dataset.vimeoId;
+      const hash = card.dataset.vimeoHash;
+      const src = hash
+        ? `https://player.vimeo.com/video/${id}?h=${hash}&autoplay=1&title=0&byline=0&portrait=0&app_id=58479`
+        : `https://player.vimeo.com/video/${id}?autoplay=1&title=0&byline=0&portrait=0&app_id=58479`;
+
+      modalTitle.textContent = card.dataset.title;
+      modalCat.textContent = card.dataset.catLabel;
+      modalDesc.textContent = card.dataset.desc;
+      modalVideo.innerHTML = `<iframe src="${src}" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media" allowfullscreen></iframe>`;
+
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      modal.classList.remove('open');
+      modalVideo.innerHTML = '';
+      document.body.style.overflow = '';
+    }
+
+    cards.forEach(card => {
+      card.addEventListener('click', () => openModal(card));
+    });
+
+    modalClose.addEventListener('click', closeModal);
+
+    modal.addEventListener('click', e => {
+      if (e.target === modal) closeModal();
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeModal();
+    });
+  </script>
+</body>
+</html>
