@@ -159,9 +159,8 @@ img {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  max-width: var(--max-w);
-  margin-inline: auto;
-  padding-inline: 24px;
+  max-width: 100%;
+  padding-inline: 48px;
 }
 
 .nav__logo {

@@ -19,24 +19,47 @@
       overflow: hidden;
     }
 
-    .hero__bg {
+    /* Vimeo background video */
+    .hero__video-wrap {
       position: absolute;
       inset: 0;
-      background:
-        radial-gradient(ellipse 70% 60% at 60% 40%, rgba(255,50,37,0.07) 0%, transparent 70%),
-        radial-gradient(ellipse 50% 80% at 10% 80%, rgba(255,50,37,0.04) 0%, transparent 60%);
+      z-index: 0;
+    }
+    .hero__video-wrap iframe {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 177.78vh; /* 16:9 at full height */
+      height: 100%;
+      min-width: 100%;
+      min-height: 56.25vw; /* 16:9 at full width */
+      transform: translate(-50%, -50%);
+      border: none;
+      pointer-events: none;
     }
 
-    .hero__noise {
+    /* Dark overlay for text legibility */
+    .hero__overlay {
       position: absolute;
       inset: 0;
-      opacity: 0.03;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      background-size: 200px;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.55) 0%,
+        rgba(0,0,0,0.45) 50%,
+        rgba(0,0,0,0.85) 100%
+      );
+      z-index: 1;
     }
+
+    .hero__bg { display: none; }
+    .hero__noise { display: none; }
 
     .hero__content {
       position: relative;
+      z-index: 2;
+    }
+
+    .hero__scroll {
       z-index: 2;
     }
 
@@ -45,7 +68,7 @@
       font-weight: 600;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--accent);
+      color: #ffffff;
       margin-bottom: 20px;
     }
 
@@ -107,7 +130,25 @@
     /* ---- Reel section ---- */
     .reel {
       background: var(--bg);
-      padding-block: 0 80px;
+      padding-block: 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .reel::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 80% at 50% 50%, rgba(255,50,37,0.35) 0%, rgba(180,20,10,0.15) 40%, transparent 70%),
+        radial-gradient(ellipse 50% 60% at 15% 90%, rgba(200,30,20,0.2) 0%, transparent 55%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .reel .container {
+      position: relative;
+      z-index: 1;
     }
 
     .reel__inner {
@@ -185,13 +226,20 @@
       min-width: 160px;
       padding: 24px 28px;
       border-right: 1px solid var(--border);
+      text-decoration: none;
+      display: block;
+      transition: background var(--transition);
     }
     .services__item:last-child { border-right: none; }
+    .services__item:hover { background: rgba(255,50,37,0.07); }
 
     .services__icon {
       font-size: 1.2rem;
       margin-bottom: 10px;
+      display: block;
+      transition: transform 0.2s ease;
     }
+    .services__item:hover .services__icon { transform: scale(1.15); }
 
     .services__name {
       font-size: 0.82rem;
@@ -199,7 +247,9 @@
       letter-spacing: 0.06em;
       color: var(--text-primary);
       text-transform: uppercase;
+      transition: color var(--transition);
     }
+    .services__item:hover .services__name { color: var(--accent); }
 
     @media (max-width: 700px) {
       .services__item {
@@ -266,10 +316,19 @@
        HERO
        ============================================================ -->
   <section class="hero">
+    <!-- Background video -->
+    <div class="hero__video-wrap">
+      <iframe
+        src="https://player.vimeo.com/video/765637299?background=1&autoplay=1&loop=1&muted=1&title=0&byline=0&portrait=0"
+        allow="autoplay; fullscreen"
+        allowfullscreen>
+      </iframe>
+    </div>
+    <div class="hero__overlay"></div>
     <div class="hero__bg"></div>
     <div class="hero__noise"></div>
 
-    <div class="container hero__content">
+    <div class="hero__content" style="padding-inline: 48px;">
       <p class="hero__eyebrow">Video Editor &amp; Motion Designer · Berlin</p>
       <h1 class="hero__title">
         Wale<br>
@@ -297,13 +356,13 @@
        ============================================================ -->
   <section class="reel section" id="reel">
     <div class="container">
-      <p class="section-label">2024 Showreel</p>
+      <p class="section-label">Showreel</p>
       <h2 class="section-heading" style="margin-bottom:40px;">The Work, in Motion</h2>
 
       <div class="reel__inner">
         <div class="reel__label">
           <div class="reel__dot"></div>
-          <span>Wale Ben — Showreel 2024</span>
+          <span>Wale Ben — Showreel</span>
         </div>
         <div class="video-wrap">
           <iframe src="https://player.vimeo.com/video/1095729680?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" title="Motion and Video Portfolio"></iframe>
@@ -319,26 +378,26 @@
   <div class="services">
     <div class="container">
       <div class="services__list">
-        <div class="services__item">
+        <a href="portfolio.html?filter=corporate" class="services__item">
           <div class="services__icon">🎬</div>
           <div class="services__name">Corporate Video</div>
-        </div>
-        <div class="services__item">
+        </a>
+        <a href="portfolio.html?filter=motion" class="services__item">
           <div class="services__icon">✦</div>
           <div class="services__name">Motion Design</div>
-        </div>
-        <div class="services__item">
+        </a>
+        <a href="portfolio.html?filter=social" class="services__item">
           <div class="services__icon">📱</div>
           <div class="services__name">Social Content</div>
-        </div>
-        <div class="services__item">
+        </a>
+        <a href="portfolio.html?filter=explainer" class="services__item">
           <div class="services__icon">💡</div>
           <div class="services__name">Explainer Video</div>
-        </div>
-        <div class="services__item">
+        </a>
+        <a href="portfolio.html?filter=event" class="services__item">
           <div class="services__icon">🎙</div>
           <div class="services__name">Interview &amp; Event</div>
-        </div>
+        </a>
       </div>
     </div>
   </div>
