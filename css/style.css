@@ -21,7 +21,7 @@
   --text-secondary: #999999;
   --text-muted:     #555555;
   --font-sans: 'Inter', 'Helvetica Neue', Arial, sans-serif;
-  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-display: "dolly", Georgia, serif;
   --max-w: 1200px;
   --nav-h: 68px;
   --transition: 0.25s ease;
@@ -51,7 +51,7 @@ img {
 }
 
 /* ---------- Google Fonts Import ---------- */
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Inter:wght@300;400;500;600&display=swap');
+@import url("https://use.typekit.net/dmz7hra.css");
 
 /* ---------- Utility ---------- */
 .container {

@@ -10,52 +10,100 @@
   <style>
     /* ---- Page header ---- */
     .page-header {
-      padding-top: calc(var(--nav-h) + 80px);
-      padding-bottom: 64px;
-      border-bottom: 1px solid var(--border);
+      padding-top: calc(var(--nav-h) + 48px);
+      padding-bottom: 40px;
+      text-align: center;
+    }
+    .page-header .section-sub {
+      max-width: 600px;
+      margin-inline: auto;
+    }
+    .page-header .section-sub a {
+      color: var(--accent);
+      text-decoration: underline;
+      text-underline-offset: 3px;
     }
 
     /* ---- Filters ---- */
     .filters {
-      padding-block: 40px;
-      border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: var(--nav-h);
-      background: rgba(13,13,13,0.96);
-      backdrop-filter: blur(12px);
-      z-index: 50;
+      padding-bottom: 48px;
     }
 
-    .filters__inner {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
+    .filters__grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+    }
+    @media (max-width: 900px) {
+      .filters__grid { grid-template-columns: repeat(4, 1fr); }
+    }
+    @media (max-width: 560px) {
+      .filters__grid { grid-template-columns: repeat(3, 1fr); }
     }
 
     .filter-btn {
-      padding: 8px 18px;
-      border-radius: 2px;
-      border: 1px solid var(--border);
-      background: transparent;
-      color: var(--text-secondary);
-      font-family: var(--font-sans);
-      font-size: 0.75rem;
-      font-weight: 500;
+      position: relative;
+      aspect-ratio: 3/2;
+      overflow: hidden;
+      border-radius: 4px;
+      border: 2px solid transparent;
+      background: var(--bg-card);
+      cursor: pointer;
+      transition: border-color var(--transition);
+      padding: 0;
+    }
+    .filter-btn:hover { border-color: rgba(255,50,37,0.4); }
+    .filter-btn.active { border-color: var(--accent); }
+
+    .filter-card__thumb {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.5s ease;
+    }
+    .filter-btn:hover .filter-card__thumb { transform: scale(1.06); }
+
+    .filter-card__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 100%);
+      transition: background var(--transition);
+    }
+    .filter-btn.active .filter-card__overlay {
+      background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(255,50,37,0.2) 100%);
+    }
+
+    .filter-card__name {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      right: 10px;
+      font-size: 0.62rem;
+      font-weight: 600;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      cursor: pointer;
-      transition: all var(--transition);
+      color: #fff;
+      z-index: 2;
+      transition: color var(--transition);
+      text-align: left;
     }
-    .filter-btn:hover {
-      border-color: var(--accent-dim);
-      color: var(--text-primary);
+    .filter-btn.active .filter-card__name { color: var(--accent); }
+
+    /* All button — no thumbnail */
+    .filter-btn--all {
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .filter-btn.active {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: #0d0d0d;
+    .filter-btn--all .filter-card__name {
+      position: static;
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      text-align: center;
     }
+    .filter-btn--all:hover .filter-card__name { color: var(--text-primary); }
+    .filter-btn--all.active .filter-card__name { color: var(--accent); }
 
     /* ---- Grid ---- */
     .portfolio-section {
@@ -276,7 +324,7 @@
         <li><a href="contact.html">Contact</a></li>
       </ul>
       <div class="nav__cta">
-        <a href="contact.html" class="btn btn-outline" style="padding:10px 20px;">Let's Work Together</a>
+        <a href="contact.html" class="btn btn-outline" style="padding:10px 20px;">Let's Connect</a>
       </div>
       <button class="nav__toggle" aria-label="Toggle mobile menu">
         <span></span><span></span><span></span>
@@ -288,9 +336,8 @@
   <!-- PAGE HEADER -->
   <header class="page-header">
     <div class="container">
-      <p class="section-label">Selected Work</p>
       <h1 class="section-heading">Portfolio</h1>
-      <p class="section-sub">7 years of video editing and motion design — corporate films, social campaigns, explainers, and everything in between.</p>
+      <p class="section-sub">Have a look at the collection of some of my past works within the last decade.<br>Can't find something similar to what you are looking for? <a href="contact.html">Write me and I will email you personally.</a></p>
     </div>
   </header>
 
@@ -298,14 +345,40 @@
   <!-- FILTERS -->
   <div class="filters">
     <div class="container">
-      <div class="filters__inner">
-        <button class="filter-btn active" data-filter="all">All</button>
-        <button class="filter-btn" data-filter="corporate">Corporate Videos</button>
-        <button class="filter-btn" data-filter="social">Social Media</button>
-        <button class="filter-btn" data-filter="explainer">Explainer Videos</button>
-        <button class="filter-btn" data-filter="event">Event Coverage</button>
-        <button class="filter-btn" data-filter="demo">Demonstration Videos</button>
-        <button class="filter-btn" data-filter="motion">Motion Design</button>
+      <div class="filters__grid">
+        <button class="filter-btn filter-btn--all active" data-filter="all">
+          <span class="filter-card__name">All Work</span>
+        </button>
+        <button class="filter-btn" data-filter="corporate" data-thumb-id="1176162412">
+          <div class="filter-card__thumb"></div>
+          <div class="filter-card__overlay"></div>
+          <span class="filter-card__name">Corporate Videos</span>
+        </button>
+        <button class="filter-btn" data-filter="social" data-thumb-id="1137218762">
+          <div class="filter-card__thumb"></div>
+          <div class="filter-card__overlay"></div>
+          <span class="filter-card__name">Social Media</span>
+        </button>
+        <button class="filter-btn" data-filter="explainer" data-thumb-id="848379677">
+          <div class="filter-card__thumb"></div>
+          <div class="filter-card__overlay"></div>
+          <span class="filter-card__name">Explainer Videos</span>
+        </button>
+        <button class="filter-btn" data-filter="event" data-thumb-id="979177694">
+          <div class="filter-card__thumb"></div>
+          <div class="filter-card__overlay"></div>
+          <span class="filter-card__name">Event Coverage</span>
+        </button>
+        <button class="filter-btn" data-filter="demo" data-thumb-id="882139298">
+          <div class="filter-card__thumb"></div>
+          <div class="filter-card__overlay"></div>
+          <span class="filter-card__name">Demo Videos</span>
+        </button>
+        <button class="filter-btn" data-filter="motion" data-thumb-id="800969421">
+          <div class="filter-card__thumb"></div>
+          <div class="filter-card__overlay"></div>
+          <span class="filter-card__name">Motion Design</span>
+        </button>
       </div>
     </div>
   </div>
@@ -501,7 +574,6 @@
   <!-- CTA -->
   <section class="section" style="border-top:1px solid var(--border); text-align:center;">
     <div class="container">
-      <p class="section-label">Next Step</p>
       <h2 class="section-heading">Like what you see?</h2>
       <p class="section-sub" style="margin:0 auto 36px;">Let's talk about your next project.</p>
       <a href="contact.html" class="btn btn-primary">Get in Touch</a>
@@ -520,7 +592,7 @@
           <li><a href="contact.html">Contact</a></li>
           <li><a href="https://vimeo.com/waleben" target="_blank" rel="noopener">Vimeo ↗</a></li>
         </ul>
-        <p class="footer__copy">© 2024 Wale Ben · Berlin</p>
+        <p class="footer__copy">© 2026 Wale Ben · Berlin</p>
       </div>
     </div>
   </footer>
@@ -573,7 +645,19 @@
     const urlFilter = new URLSearchParams(window.location.search).get('filter');
     if (urlFilter) applyFilter(urlFilter);
 
-    // ---- Load Vimeo thumbnails ----
+    // ---- Load Vimeo thumbnails for filter cards ----
+    document.querySelectorAll('.filter-btn[data-thumb-id]').forEach(btn => {
+      const id = btn.dataset.thumbId;
+      fetch(`https://vimeo.com/api/v2/video/${id}.json`)
+        .then(r => r.json())
+        .then(data => {
+          const src = data[0]?.thumbnail_large || data[0]?.thumbnail_medium;
+          if (src) btn.querySelector('.filter-card__thumb').style.backgroundImage = `url(${src})`;
+        })
+        .catch(() => {});
+    });
+
+    // ---- Load Vimeo thumbnails for portfolio cards ----
     cards.forEach(card => {
       const id = card.dataset.vimeoId;
       if (!id) return;

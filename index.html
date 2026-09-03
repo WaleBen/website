@@ -210,54 +210,65 @@
 
     /* ---- Services strip ---- */
     .services {
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding-block: 48px;
+      padding-block: 64px;
     }
 
-    .services__list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0;
+    .services__grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
     }
 
-    .services__item {
-      flex: 1;
-      min-width: 160px;
-      padding: 24px 28px;
-      border-right: 1px solid var(--border);
+    @media (max-width: 900px) {
+      .services__grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 560px) {
+      .services__grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .services__card {
+      position: relative;
+      aspect-ratio: 2/3;
+      overflow: hidden;
+      border-radius: 4px;
       text-decoration: none;
       display: block;
+      background: var(--bg-card);
+    }
+
+    .services__card-thumb {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.5s ease;
+    }
+    .services__card:hover .services__card-thumb { transform: scale(1.06); }
+
+    .services__card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.25) 60%, rgba(0,0,0,0.1) 100%);
       transition: background var(--transition);
     }
-    .services__item:last-child { border-right: none; }
-    .services__item:hover { background: rgba(255,50,37,0.07); }
-
-    .services__icon {
-      font-size: 1.2rem;
-      margin-bottom: 10px;
-      display: block;
-      transition: transform 0.2s ease;
+    .services__card:hover .services__card-overlay {
+      background: linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(255,50,37,0.18) 60%, rgba(0,0,0,0.15) 100%);
     }
-    .services__item:hover .services__icon { transform: scale(1.15); }
 
-    .services__name {
-      font-size: 0.82rem;
-      font-weight: 500;
-      letter-spacing: 0.06em;
-      color: var(--text-primary);
+    .services__card-name {
+      position: absolute;
+      bottom: 18px;
+      left: 16px;
+      right: 16px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
+      color: #fff;
+      z-index: 2;
       transition: color var(--transition);
     }
-    .services__item:hover .services__name { color: var(--accent); }
-
-    @media (max-width: 700px) {
-      .services__item {
-        border-right: none;
-        border-bottom: 1px solid var(--border);
-      }
-      .services__item:last-child { border-bottom: none; }
-    }
+    .services__card:hover .services__card-name { color: var(--accent); }
 
     /* ---- CTA band ---- */
     .cta-band {
@@ -302,7 +313,7 @@
       </ul>
 
       <div class="nav__cta">
-        <a href="contact.html" class="btn btn-outline" style="padding:10px 20px;">Let's Work Together</a>
+        <a href="contact.html" class="btn btn-outline" style="padding:10px 20px;">Let's Connect</a>
       </div>
 
       <button class="nav__toggle" aria-label="Toggle mobile menu">
@@ -335,8 +346,8 @@
         <strong>Ben.</strong>
       </h1>
       <p class="hero__sub">
-        Crafting cinematic stories and motion-driven experiences for brands,
-        agencies, and creative teams — for over 7 years.
+        Step into a world of video: creative stories wrapped in vision,
+        deep meaning, and ideas that build lore.
       </p>
       <div class="hero__actions">
         <a href="portfolio.html" class="btn btn-primary">View Portfolio</a>
@@ -356,7 +367,6 @@
        ============================================================ -->
   <section class="reel section" id="reel">
     <div class="container">
-      <p class="section-label">Showreel</p>
       <h2 class="section-heading" style="margin-bottom:40px;">The Work, in Motion</h2>
 
       <div class="reel__inner">
@@ -375,32 +385,37 @@
   <!-- ============================================================
        SERVICES STRIP
        ============================================================ -->
-  <div class="services">
+  <section class="services">
     <div class="container">
-      <div class="services__list">
-        <a href="portfolio.html?filter=corporate" class="services__item">
-          <div class="services__icon">🎬</div>
-          <div class="services__name">Corporate Video</div>
+      <div class="services__grid">
+        <a href="portfolio.html?filter=corporate" class="services__card" data-thumb-id="1176162412">
+          <div class="services__card-thumb"></div>
+          <div class="services__card-overlay"></div>
+          <span class="services__card-name">Corporate Video</span>
         </a>
-        <a href="portfolio.html?filter=motion" class="services__item">
-          <div class="services__icon">✦</div>
-          <div class="services__name">Motion Design</div>
+        <a href="portfolio.html?filter=motion" class="services__card" data-thumb-id="800969421">
+          <div class="services__card-thumb"></div>
+          <div class="services__card-overlay"></div>
+          <span class="services__card-name">Motion Design</span>
         </a>
-        <a href="portfolio.html?filter=social" class="services__item">
-          <div class="services__icon">📱</div>
-          <div class="services__name">Social Content</div>
+        <a href="portfolio.html?filter=social" class="services__card" data-thumb-id="1137218762">
+          <div class="services__card-thumb"></div>
+          <div class="services__card-overlay"></div>
+          <span class="services__card-name">Social Content</span>
         </a>
-        <a href="portfolio.html?filter=explainer" class="services__item">
-          <div class="services__icon">💡</div>
-          <div class="services__name">Explainer Video</div>
+        <a href="portfolio.html?filter=explainer" class="services__card" data-thumb-id="848379677">
+          <div class="services__card-thumb"></div>
+          <div class="services__card-overlay"></div>
+          <span class="services__card-name">Explainer Video</span>
         </a>
-        <a href="portfolio.html?filter=event" class="services__item">
-          <div class="services__icon">🎙</div>
-          <div class="services__name">Interview &amp; Event</div>
+        <a href="portfolio.html?filter=event" class="services__card" data-thumb-id="979177694">
+          <div class="services__card-thumb"></div>
+          <div class="services__card-overlay"></div>
+          <span class="services__card-name">Interview &amp; Event</span>
         </a>
       </div>
     </div>
-  </div>
+  </section>
 
 
   <!-- ============================================================
@@ -410,7 +425,6 @@
     <div class="container">
       <div class="featured__header">
         <div>
-          <p class="section-label">Selected Work</p>
           <h2 class="section-heading">Featured Projects</h2>
           <p class="section-sub">A snapshot of recent work across brands, agencies, and personal projects.</p>
         </div>
@@ -483,7 +497,6 @@
        ============================================================ -->
   <section class="cta-band section">
     <div class="container">
-      <p class="section-label">Let's Talk</p>
       <h2 class="cta-band__title">
         Got a project in mind?<br>
         <span class="accent">Let's make it happen.</span>
@@ -516,7 +529,7 @@
           <li><a href="https://vimeo.com/waleben" target="_blank" rel="noopener">Vimeo ↗</a></li>
         </ul>
 
-        <p class="footer__copy">© 2024 Wale Ben · Berlin</p>
+        <p class="footer__copy">© 2026 Wale Ben · Berlin</p>
       </div>
     </div>
   </footer>
@@ -537,6 +550,18 @@
           const img = document.getElementById(el);
           const src = data[0]?.thumbnail_large || data[0]?.thumbnail_medium;
           if (img && src) { img.src = src; img.style.opacity = '1'; }
+        })
+        .catch(() => {});
+    });
+
+    // Load Vimeo thumbnails for category cards
+    document.querySelectorAll('.services__card[data-thumb-id]').forEach(card => {
+      const id = card.dataset.thumbId;
+      fetch(`https://vimeo.com/api/v2/video/${id}.json`)
+        .then(r => r.json())
+        .then(data => {
+          const src = data[0]?.thumbnail_large || data[0]?.thumbnail_medium;
+          if (src) card.querySelector('.services__card-thumb').style.backgroundImage = `url(${src})`;
         })
         .catch(() => {});
     });
