@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Page Not Found — Wale Ben</title>
+  <meta name="robots" content="noindex" />
+  <link rel="icon" type="image/png" href="images/favicon.png?v=2" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    .not-found {
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 48px 24px;
+    }
+    .not-found__code {
+      font-family: var(--font-display);
+      font-size: clamp(6rem, 20vw, 12rem);
+      font-weight: 300;
+      line-height: 1;
+      color: var(--accent);
+      opacity: 0.25;
+      margin-bottom: 24px;
+    }
+    .not-found__title {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      font-weight: 300;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+    }
+    .not-found__sub {
+      font-size: 1rem;
+      color: var(--text-secondary);
+      max-width: 440px;
+      margin-bottom: 40px;
+      line-height: 1.7;
+    }
+    .not-found__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav" aria-label="Main navigation">
+    <div class="nav__inner">
+      <a href="index.html" class="nav__logo"><img src="images/logo.png" alt="Wale Ben" style="height:44px;width:auto;display:block;" /></a>
+      <ul class="nav__links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="portfolio.html">Portfolio</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="nav__cta">
+        <a href="contact.html" class="btn btn-outline" style="padding:10px 20px;">Let's Connect</a>
+      </div>
+      <button class="nav__toggle" aria-label="Toggle mobile menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main class="not-found">
+    <div class="not-found__code">404</div>
+    <h1 class="not-found__title">Page not found</h1>
+    <p class="not-found__sub">This frame didn't make the cut. The page you're looking for has moved, been deleted, or never existed.</p>
+    <div class="not-found__actions">
+      <a href="index.html" class="btn btn-primary">Back to Home</a>
+      <a href="portfolio.html" class="btn btn-outline">View Portfolio</a>
+    </div>
+  </main>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

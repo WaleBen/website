@@ -4,7 +4,15 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Contact — Wale Ben</title>
-  <meta name="description" content="Get in touch with Wale Ben — Berlin-based video editor and motion designer available for freelance projects and collaborations." />
+  <meta name="description" content="Get in touch with Wale Ben — Berlin-based video editor and motion designer available for freelance projects, long-term collaborations, and agency partnerships." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://waleben.github.io/website/contact.html" />
+  <meta property="og:title" content="Contact — Wale Ben" />
+  <meta property="og:description" content="Want to tell your story through video? Get in touch with Wale Ben, Berlin-based video editor and motion designer." />
+  <meta property="og:image" content="https://waleben.github.io/website/images/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Contact — Wale Ben" />
+  <meta name="twitter:image" content="https://waleben.github.io/website/images/og-image.jpg" />
   <link rel="icon" type="image/png" href="images/favicon.png?v=2" />
   <link rel="stylesheet" href="css/style.css" />
   <style>
@@ -352,14 +360,20 @@
           <p class="form-sub">Fill in the form and I'll get back to you as soon as possible.</p>
 
           <form id="contactForm" novalidate>
+            <!-- Honeypot: hidden field — bots fill it, humans don't -->
+            <div style="position:absolute;left:-9999px;opacity:0;" aria-hidden="true">
+              <label for="website_url">Leave this blank</label>
+              <input type="text" id="website_url" name="website_url" tabindex="-1" autocomplete="off" />
+            </div>
+
             <div class="form-row">
               <div class="form-group">
                 <label for="name">Your Name</label>
-                <input type="text" id="name" name="name" placeholder="Jane Smith" required />
+                <input type="text" id="name" name="name" placeholder="Jane Smith" required maxlength="100" autocomplete="name" />
               </div>
               <div class="form-group">
                 <label for="email">Email Address</label>
-                <input type="email" id="email" name="email" placeholder="jane@company.com" required />
+                <input type="email" id="email" name="email" placeholder="jane@company.com" required maxlength="200" autocomplete="email" />
               </div>
             </div>
 
@@ -378,9 +392,10 @@
 
             <div class="form-group">
               <label for="message">Tell Me About Your Project</label>
-              <textarea id="message" name="message" placeholder="Give me a brief overview — what do you need, what's the timeline, any relevant context…" required></textarea>
+              <textarea id="message" name="message" placeholder="Give me a brief overview — what do you need, what's the timeline, any relevant context…" required maxlength="2000"></textarea>
             </div>
 
+            <div id="formError" style="display:none;margin-bottom:14px;font-size:0.82rem;color:#FF3225;"></div>
             <button type="submit" class="btn btn-primary form-submit">Send Message →</button>
           </form>
 
@@ -405,38 +420,55 @@
           <li><a href="portfolio.html">Portfolio</a></li>
           <li><a href="about.html">About</a></li>
           <li><a href="contact.html">Contact</a></li>
-          <li><a href="https://vimeo.com/" target="_blank" rel="noopener">Vimeo ↗</a></li>
+          <li><a href="https://vimeo.com/waleben" target="_blank" rel="noopener">Vimeo ↗</a></li>
         </ul>
-        <p class="footer__copy">© 2026 Wale Ben · Berlin</p>
+        <p class="footer__copy">© 2026 Wale Ben · Berlin · <a href="privacy.html" style="color:inherit;">Privacy</a> · <a href="terms.html" style="color:inherit;">Terms</a></p>
       </div>
     </div>
   </footer>
+
+  <div class="cookie-banner hidden" id="cookieBanner" role="region" aria-label="Cookie consent">
+    <p class="cookie-banner__text">This site uses cookies for analytics. See our <a href="privacy.html">Privacy Policy</a>.</p>
+    <div class="cookie-banner__actions">
+      <button class="cookie-btn cookie-btn--decline" id="cookieDecline">Decline</button>
+      <button class="cookie-btn cookie-btn--accept" id="cookieAccept">Accept</button>
+    </div>
+  </div>
 
   <script src="js/main.js"></script>
   <script>
     const form = document.getElementById('contactForm');
     const success = document.getElementById('formSuccess');
+    const errorBox = document.getElementById('formError');
 
-    form.addEventListener('submit', e => {
+    function showError(msg) {
+      errorBox.textContent = msg;
+      errorBox.style.display = 'block';
+    }
+    function clearError() { errorBox.style.display = 'none'; }
+
+    function isValidEmail(v) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+    }
+
+    form.addEventListener('submit', function (e) {
       e.preventDefault();
+      clearError();
 
-      const name = form.name.value.trim();
-      const email = form.email.value.trim();
-      const message = form.message.value.trim();
+      // Honeypot check
+      if (form.website_url && form.website_url.value) return;
 
-      if (!name || !email || !message) {
-        // Simple inline validation highlight
-        [form.name, form.email, form.message].forEach(field => {
-          if (!field.value.trim()) {
-            field.style.borderColor = '#c0392b';
-            field.addEventListener('input', () => field.style.borderColor = '', { once: true });
-          }
-        });
-        return;
-      }
+      const name    = document.getElementById('name').value.trim();
+      const email   = document.getElementById('email').value.trim();
+      const message = document.getElementById('message').value.trim();
 
-      // Hide form, show success
-      // (Wire to a backend / Formspree / Netlify Forms as needed)
+      if (!name) { showError('Please enter your name.'); document.getElementById('name').focus(); return; }
+      if (!email) { showError('Please enter your email address.'); document.getElementById('email').focus(); return; }
+      if (!isValidEmail(email)) { showError('Please enter a valid email address.'); document.getElementById('email').focus(); return; }
+      if (!message) { showError('Please tell me about your project.'); document.getElementById('message').focus(); return; }
+      if (message.length < 10) { showError('Please provide a bit more detail about your project.'); document.getElementById('message').focus(); return; }
+
+      // Wire to Formspree or Netlify Forms here
       form.style.display = 'none';
       success.classList.add('visible');
     });
