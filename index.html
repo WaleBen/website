@@ -201,41 +201,63 @@
     /* ---- Services strip (dark) ---- */
     .services {
       background: var(--bg);
-      padding-block: 32px;
+      padding-block: 64px;
     }
 
-    .services__list {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
+    .services__grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
     }
 
-    .services__item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px 0;
-      border-bottom: 1px solid var(--border);
+    @media (max-width: 900px) {
+      .services__grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 560px) {
+      .services__grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .services__card {
+      position: relative;
+      aspect-ratio: 2/3;
+      overflow: hidden;
+      border-radius: 4px;
       text-decoration: none;
-      color: var(--text-secondary);
-      font-size: 0.8rem;
-      font-weight: 500;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      transition: color var(--transition), padding-left var(--transition);
+      display: block;
+      background: var(--bg-card);
     }
-    .services__list .services__item:first-child { border-top: 1px solid var(--border); }
-    .services__item:hover {
-      color: var(--text-primary);
-      padding-left: 6px;
-    }
-    .services__item:hover .services__arrow { color: var(--accent); }
 
-    .services__arrow {
-      color: var(--text-muted);
-      font-size: 0.9rem;
+    .services__card-thumb {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.5s ease;
+    }
+    .services__card:hover .services__card-thumb { transform: scale(1.06); }
+
+    .services__card-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.62);
+      transition: background var(--transition);
+    }
+    .services__card:hover .services__card-overlay { background: rgba(0,0,0,0.5); }
+
+    .services__card-name {
+      position: absolute;
+      bottom: 18px;
+      left: 16px;
+      right: 16px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #fff;
+      z-index: 2;
       transition: color var(--transition);
     }
+    .services__card:hover .services__card-name { color: var(--accent); }
 
     /* ---- CTA band (dark) ---- */
     .cta-band {
@@ -394,26 +416,31 @@
        ============================================================ -->
   <section class="services">
     <div class="container">
-      <div class="services__list">
-        <a href="portfolio.html?filter=corporate" class="services__item">
-          <span>Corporate Video</span>
-          <span class="services__arrow">→</span>
+      <div class="services__grid">
+        <a href="portfolio.html?filter=corporate" class="services__card" data-thumb-id="1176162412">
+          <div class="services__card-thumb"></div>
+          <div class="services__card-overlay"></div>
+          <span class="services__card-name">Corporate Video</span>
         </a>
-        <a href="portfolio.html?filter=motion" class="services__item">
-          <span>Motion Design</span>
-          <span class="services__arrow">→</span>
+        <a href="portfolio.html?filter=motion" class="services__card" data-thumb-id="800969421">
+          <div class="services__card-thumb"></div>
+          <div class="services__card-overlay"></div>
+          <span class="services__card-name">Motion Design</span>
         </a>
-        <a href="portfolio.html?filter=social" class="services__item">
-          <span>Social Content</span>
-          <span class="services__arrow">→</span>
+        <a href="portfolio.html?filter=social" class="services__card" data-thumb-id="1137218762">
+          <div class="services__card-thumb"></div>
+          <div class="services__card-overlay"></div>
+          <span class="services__card-name">Social Content</span>
         </a>
-        <a href="portfolio.html?filter=explainer" class="services__item">
-          <span>Explainer Video</span>
-          <span class="services__arrow">→</span>
+        <a href="portfolio.html?filter=explainer" class="services__card" data-thumb-id="848379677">
+          <div class="services__card-thumb"></div>
+          <div class="services__card-overlay"></div>
+          <span class="services__card-name">Explainer Video</span>
         </a>
-        <a href="portfolio.html?filter=event" class="services__item">
-          <span>Interview &amp; Event</span>
-          <span class="services__arrow">→</span>
+        <a href="portfolio.html?filter=event" class="services__card" data-thumb-id="979177694">
+          <div class="services__card-thumb"></div>
+          <div class="services__card-overlay"></div>
+          <span class="services__card-name">Interview &amp; Event</span>
         </a>
       </div>
     </div>
@@ -548,6 +575,18 @@
   <script src="https://player.vimeo.com/api/player.js"></script>
   <script src="js/main.js"></script>
   <script>
+    // Load Vimeo thumbnails for category cards
+    document.querySelectorAll('.services__card[data-thumb-id]').forEach(card => {
+      const id = card.dataset.thumbId;
+      fetch(`https://vimeo.com/api/v2/video/${id}.json`)
+        .then(r => r.json())
+        .then(data => {
+          const src = data[0]?.thumbnail_large || data[0]?.thumbnail_medium;
+          if (src) card.querySelector('.services__card-thumb').style.backgroundImage = `url(${src})`;
+        })
+        .catch(() => {});
+    });
+
     // Load Vimeo thumbnails for featured cards
     const thumbs = [
       { id: '1176162412', el: 'thumb-marlin' },
