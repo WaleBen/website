@@ -470,6 +470,7 @@ img {
 .filters__tabs {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 0;
   border-bottom: 1px solid var(--border);
   margin-bottom: 56px;
@@ -480,11 +481,11 @@ img {
   border-bottom: 2px solid transparent;
   color: var(--text-muted);
   font-family: var(--font-sans);
-  font-size: 0.73rem;
+  font-size: 0.85rem;
   font-weight: 500;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  padding: 14px 22px;
+  padding: 16px 24px;
   margin-bottom: -1px;
   cursor: pointer;
   transition: color var(--transition), border-color var(--transition);
