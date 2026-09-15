@@ -505,30 +505,53 @@ img {
 
   .nav__toggle { display: flex; }
 
+  /* When open, expand the nav itself to full screen — avoids backdrop-filter containment bug */
   .nav.mobile-open {
+    height: 100dvh;
     background: #0d0d0d !important;
-    border-color: var(--border);
+    backdrop-filter: none !important;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    border-bottom: none;
+  }
+  .nav.mobile-open .nav__inner {
+    width: 100%;
+    border-bottom: 1px solid #1e1e1e;
   }
   .nav.mobile-open .nav__links {
     display: flex;
     flex-direction: column;
-    position: fixed;
-    top: var(--nav-h);
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #0d0d0d;
+    position: static;
+    flex: 1;
     align-items: center;
     justify-content: center;
-    gap: 48px;
-    z-index: 9999;
-    border-top: 1px solid #1e1e1e;
+    gap: 40px;
+    background: transparent;
+    animation: menuFadeIn 0.25s ease forwards;
+  }
+  @keyframes menuFadeIn {
+    from { opacity: 0; transform: translateY(-12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .nav.mobile-open .nav__links li {
+    opacity: 0;
+    animation: menuItemIn 0.3s ease forwards;
+  }
+  .nav.mobile-open .nav__links li:nth-child(1) { animation-delay: 0.05s; }
+  .nav.mobile-open .nav__links li:nth-child(2) { animation-delay: 0.1s; }
+  .nav.mobile-open .nav__links li:nth-child(3) { animation-delay: 0.15s; }
+  .nav.mobile-open .nav__links li:nth-child(4) { animation-delay: 0.2s; }
+  @keyframes menuItemIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
   .nav.mobile-open .nav__links a {
-    font-size: 1.4rem;
-    font-weight: 500;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
+    font-size: 1.6rem;
+    font-weight: 400;
+    font-family: var(--font-display);
+    letter-spacing: 0.04em;
+    text-transform: none;
     color: #FFFDFB;
   }
   .nav.mobile-open .nav__links a:hover,
