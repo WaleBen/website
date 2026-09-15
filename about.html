@@ -23,10 +23,13 @@
       border-bottom: 1px solid var(--border);
     }
 
-    /* ---- Bio section ---- */
+    /* ---- Bio section (light) ---- */
     .bio {
+      background: #FFFDFB;
       padding-block: 96px;
     }
+    .bio .section-heading { color: #111111; }
+    .bio .section-label { color: var(--accent); }
 
     .bio__grid {
       display: grid;
@@ -51,24 +54,23 @@
       aspect-ratio: 4/5;
       object-fit: cover;
       border-radius: 4px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
+      background: #e8e8e8;
+      border: 1px solid #d0d0d0;
       display: block;
     }
 
-    /* Placeholder when no photo */
     .bio__photo-placeholder {
       width: 100%;
       aspect-ratio: 4/5;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
+      background: #f0f0f0;
+      border: 1px solid #d0d0d0;
       border-radius: 4px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       gap: 12px;
-      color: var(--text-muted);
+      color: #999;
       font-size: 0.8rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
@@ -89,74 +91,31 @@
       display: inline-block;
       margin-top: 24px;
       padding: 8px 16px;
-      background: var(--bg-surface);
-      border: 1px solid var(--border);
+      background: #f0f0f0;
+      border: 1px solid #d0d0d0;
       border-radius: 2px;
       font-size: 0.75rem;
       font-weight: 500;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--text-secondary);
+      color: #666;
     }
     .bio__tag span { color: var(--accent); }
 
     .bio__text p {
       font-size: 1rem;
-      color: var(--text-secondary);
+      color: #555555;
       line-height: 1.8;
       margin-bottom: 20px;
     }
     .bio__text p:last-child { margin-bottom: 0; }
 
     .bio__text strong {
-      color: var(--text-primary);
-      font-weight: 500;
+      color: #111111;
+      font-weight: 600;
     }
 
-    /* ---- Stats row ---- */
-    .stats {
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding-block: 0;
-    }
-
-    .stats__grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-    }
-
-    @media (max-width: 700px) {
-      .stats__grid { grid-template-columns: repeat(2, 1fr); }
-    }
-
-    .stats__item {
-      padding: 40px 32px;
-      border-right: 1px solid var(--border);
-      text-align: center;
-    }
-    .stats__item:last-child { border-right: none; }
-
-    @media (max-width: 700px) {
-      .stats__item:nth-child(2) { border-right: none; }
-      .stats__item:nth-child(3) { border-top: 1px solid var(--border); }
-    }
-
-    .stats__number {
-      font-family: var(--font-display);
-      font-size: 3rem;
-      font-weight: 300;
-      color: var(--accent);
-      line-height: 1;
-      margin-bottom: 8px;
-    }
-
-    .stats__label {
-      font-size: 0.75rem;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-    }
+    /* Stats row removed — using shared .stats-band from style.css */
 
     /* ---- Skills ---- */
     .skills {
@@ -211,10 +170,13 @@
       line-height: 1.6;
     }
 
-    /* ---- Education ---- */
+    /* ---- Education (light) ---- */
     .education {
+      background: #FFFDFB;
       padding-block: 96px;
     }
+    .education .section-heading { color: #111111; }
+    .education .section-label { color: var(--accent); }
 
     .education__list {
       margin-top: 48px;
@@ -228,10 +190,10 @@
       grid-template-columns: 160px 1fr;
       gap: 32px;
       padding-block: 36px;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid #e0e0e0;
       align-items: start;
     }
-    .edu-item:first-child { border-top: 1px solid var(--border); }
+    .edu-item:first-child { border-top: 1px solid #e0e0e0; }
 
     @media (max-width: 600px) {
       .edu-item { grid-template-columns: 1fr; gap: 8px; }
@@ -242,14 +204,14 @@
       font-weight: 500;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--text-muted);
+      color: #888888;
       padding-top: 4px;
     }
 
     .edu-item__degree {
       font-size: 1rem;
       font-weight: 500;
-      color: var(--text-primary);
+      color: #111111;
       margin-bottom: 4px;
     }
 
@@ -261,14 +223,15 @@
 
     .edu-item__desc {
       font-size: 0.85rem;
-      color: var(--text-secondary);
+      color: #555555;
       line-height: 1.6;
     }
 
-    /* ---- CTA ---- */
+    /* ---- CTA (dark) ---- */
     .about-cta {
+      background: var(--bg);
       text-align: center;
-      border-top: 1px solid var(--border);
+      border-top: none;
     }
   </style>
   <!-- Google Tag Manager -->
@@ -356,28 +319,28 @@
 
 
   <!-- STATS -->
-  <div class="stats">
-    <div class="container" style="padding:0">
+  <section class="stats-band">
+    <div class="container">
       <div class="stats__grid">
-        <div class="stats__item">
-          <div class="stats__number">8+</div>
-          <div class="stats__label">Years Experience</div>
+        <div class="stat">
+          <span class="stat__num">8+</span>
+          <span class="stat__label">Years Experience</span>
         </div>
-        <div class="stats__item">
-          <div class="stats__number">223+</div>
-          <div class="stats__label">Projects Delivered</div>
+        <div class="stat">
+          <span class="stat__num">223+</span>
+          <span class="stat__label">Projects Delivered</span>
         </div>
-        <div class="stats__item">
-          <div class="stats__number">27+</div>
-          <div class="stats__label">Ad Campaigns</div>
+        <div class="stat">
+          <span class="stat__num">27+</span>
+          <span class="stat__label">Ad Campaigns</span>
         </div>
-        <div class="stats__item">
-          <div class="stats__number">3</div>
-          <div class="stats__label">Continents Served</div>
+        <div class="stat">
+          <span class="stat__num">3</span>
+          <span class="stat__label">Continents Served</span>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 
 
   <!-- SKILLS -->
