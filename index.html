@@ -29,7 +29,6 @@
       overflow: hidden;
     }
 
-    /* Vimeo background video */
     .hero__video-wrap {
       position: absolute;
       inset: 0;
@@ -39,25 +38,19 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 177.78vh; /* 16:9 at full height */
+      width: 177.78vh;
       height: 100%;
       min-width: 100%;
-      min-height: 56.25vw; /* 16:9 at full width */
+      min-height: 56.25vw;
       transform: translate(-50%, -50%);
       border: none;
       pointer-events: none;
     }
 
-    /* Dark overlay for text legibility */
     .hero__overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(
-        to bottom,
-        rgba(0,0,0,0.55) 0%,
-        rgba(0,0,0,0.45) 50%,
-        rgba(0,0,0,0.85) 100%
-      );
+      background: rgba(0,0,0,0.58);
       z-index: 1;
     }
 
@@ -69,9 +62,7 @@
       z-index: 2;
     }
 
-    .hero__scroll {
-      z-index: 2;
-    }
+    .hero__scroll { z-index: 2; }
 
     .hero__eyebrow {
       font-size: 0.72rem;
@@ -90,11 +81,7 @@
       letter-spacing: -0.01em;
       margin-bottom: 24px;
     }
-
-    .hero__title strong {
-      font-weight: 600;
-      display: block;
-    }
+    .hero__title strong { font-weight: 600; display: block; }
 
     .hero__sub {
       font-size: 1rem;
@@ -104,11 +91,7 @@
       line-height: 1.7;
     }
 
-    .hero__actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-    }
+    .hero__actions { display: flex; flex-wrap: wrap; gap: 14px; }
 
     .hero__scroll {
       position: absolute;
@@ -128,50 +111,35 @@
     .hero__scroll-line {
       width: 1px;
       height: 48px;
-      background: linear-gradient(to bottom, var(--accent), transparent);
+      background: var(--accent);
+      opacity: 0.7;
       animation: scrollPulse 2s ease-in-out infinite;
     }
 
     @keyframes scrollPulse {
-      0%, 100% { opacity: 0.4; transform: scaleY(1); }
-      50% { opacity: 1; transform: scaleY(0.7); }
+      0%, 100% { opacity: 0.3; transform: scaleY(1); }
+      50% { opacity: 0.8; transform: scaleY(0.7); }
     }
 
-    /* ---- Reel section ---- */
+    /* ---- Reel section (light bg) ---- */
     .reel {
-      background: var(--bg);
-      padding-block: 80px;
-      position: relative;
-      overflow: hidden;
+      background: #FFFDFB;
+      padding-block: 96px;
     }
 
-    .reel::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(ellipse 80% 80% at 50% 50%, rgba(255,50,37,0.35) 0%, rgba(180,20,10,0.15) 40%, transparent 70%),
-        radial-gradient(ellipse 50% 60% at 15% 90%, rgba(200,30,20,0.2) 0%, transparent 55%);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .reel .container {
-      position: relative;
-      z-index: 1;
-    }
+    .reel .section-heading { color: #111111; }
 
     .reel__inner {
-      border: 1px solid var(--border);
+      border: 1px solid #d8d8d8;
       border-radius: 4px;
       overflow: hidden;
-      box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.1);
     }
 
     .reel__label {
       padding: 14px 20px;
-      background: var(--bg-surface);
-      border-bottom: 1px solid var(--border);
+      background: #f4f4f4;
+      border-bottom: 1px solid #d8d8d8;
       display: flex;
       align-items: center;
       gap: 8px;
@@ -188,12 +156,24 @@
       font-weight: 500;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--text-secondary);
+      color: #666;
     }
 
-    /* ---- Featured Projects ---- */
+    /* ---- Featured Projects (light bg) ---- */
     .featured {
-      background: var(--bg-surface);
+      background: #FFFDFB;
+    }
+
+    .featured .section-heading { color: #111111; }
+    .featured .section-sub { color: #666666; }
+
+    .featured .btn-outline {
+      color: #111111;
+      border-color: #cccccc;
+    }
+    .featured .btn-outline:hover {
+      color: var(--accent);
+      border-color: var(--accent);
     }
 
     .featured__header {
@@ -218,8 +198,9 @@
       .featured__grid { grid-template-columns: 1fr; }
     }
 
-    /* ---- Services strip ---- */
+    /* ---- Services strip (dark) ---- */
     .services {
+      background: var(--bg);
       padding-block: 64px;
     }
 
@@ -258,11 +239,11 @@
     .services__card-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.25) 60%, rgba(0,0,0,0.1) 100%);
+      background: rgba(0,0,0,0.62);
       transition: background var(--transition);
     }
     .services__card:hover .services__card-overlay {
-      background: linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(255,50,37,0.18) 60%, rgba(0,0,0,0.15) 100%);
+      background: rgba(0,0,0,0.5);
     }
 
     .services__card-name {
@@ -280,8 +261,9 @@
     }
     .services__card:hover .services__card-name { color: var(--accent); }
 
-    /* ---- CTA band ---- */
+    /* ---- CTA band (dark) ---- */
     .cta-band {
+      background: var(--bg);
       text-align: center;
     }
 
@@ -384,6 +366,33 @@
 
 
   <!-- ============================================================
+       STATS BAND
+       ============================================================ -->
+  <section class="stats-band">
+    <div class="container">
+      <div class="stats__grid">
+        <div class="stat">
+          <span class="stat__num">8+</span>
+          <span class="stat__label">Years Experience</span>
+        </div>
+        <div class="stat">
+          <span class="stat__num">223+</span>
+          <span class="stat__label">Projects Delivered</span>
+        </div>
+        <div class="stat">
+          <span class="stat__num">27+</span>
+          <span class="stat__label">Ad Campaigns</span>
+        </div>
+        <div class="stat">
+          <span class="stat__num">3</span>
+          <span class="stat__label">Continents Served</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
        SHOWREEL
        ============================================================ -->
   <section class="reel section" id="reel">
@@ -458,7 +467,7 @@
         <article class="project-card" style="cursor:pointer;" onclick="window.location='portfolio.html'">
           <div class="project-card__thumb">
             <img id="thumb-marlin" src="" alt="Marlin Immobilien" style="width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 0.3s" />
-            <div style="position:absolute;inset:0;background:linear-gradient(135deg,#1a1a1a,#0f0f0f);z-index:-1"></div>
+            <div style="position:absolute;inset:0;background:#111;z-index:-1"></div>
             <div class="project-card__play">
               <div class="project-card__play-icon">
                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><polygon points="5,3 19,12 5,21"/></svg>
@@ -476,7 +485,7 @@
         <article class="project-card" style="cursor:pointer;" onclick="window.location='portfolio.html'">
           <div class="project-card__thumb">
             <img id="thumb-bringtome" src="" alt="Bring To Me App" style="width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 0.3s" />
-            <div style="position:absolute;inset:0;background:linear-gradient(135deg,#181818,#0f0f0f);z-index:-1"></div>
+            <div style="position:absolute;inset:0;background:#111;z-index:-1"></div>
             <div class="project-card__play">
               <div class="project-card__play-icon">
                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><polygon points="5,3 19,12 5,21"/></svg>
@@ -494,7 +503,7 @@
         <article class="project-card" style="cursor:pointer;" onclick="window.location='portfolio.html'">
           <div class="project-card__thumb">
             <img id="thumb-pets" src="" alt="Pets Are Kids" style="width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 0.3s" />
-            <div style="position:absolute;inset:0;background:linear-gradient(135deg,#161616,#0f0f0f);z-index:-1"></div>
+            <div style="position:absolute;inset:0;background:#111;z-index:-1"></div>
             <div class="project-card__play">
               <div class="project-card__play-icon">
                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><polygon points="5,3 19,12 5,21"/></svg>

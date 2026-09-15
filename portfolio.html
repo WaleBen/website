@@ -34,84 +34,8 @@
 
     /* ---- Filters ---- */
     .filters {
-      padding-bottom: 48px;
+      padding-bottom: 0;
     }
-
-    .filters__grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 8px;
-    }
-    @media (max-width: 900px) {
-      .filters__grid { grid-template-columns: repeat(4, 1fr); }
-    }
-    @media (max-width: 560px) {
-      .filters__grid { grid-template-columns: repeat(3, 1fr); }
-    }
-
-    .filter-btn {
-      position: relative;
-      aspect-ratio: 3/2;
-      overflow: hidden;
-      border-radius: 4px;
-      border: 2px solid transparent;
-      background: var(--bg-card);
-      cursor: pointer;
-      transition: border-color var(--transition);
-      padding: 0;
-    }
-    .filter-btn:hover { border-color: rgba(255,50,37,0.4); }
-    .filter-btn.active { border-color: var(--accent); }
-
-    .filter-card__thumb {
-      position: absolute;
-      inset: 0;
-      background-size: cover;
-      background-position: center;
-      transition: transform 0.5s ease;
-    }
-    .filter-btn:hover .filter-card__thumb { transform: scale(1.06); }
-
-    .filter-card__overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 100%);
-      transition: background var(--transition);
-    }
-    .filter-btn.active .filter-card__overlay {
-      background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(255,50,37,0.2) 100%);
-    }
-
-    .filter-card__name {
-      position: absolute;
-      bottom: 10px;
-      left: 10px;
-      right: 10px;
-      font-size: 0.62rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: #fff;
-      z-index: 2;
-      transition: color var(--transition);
-      text-align: left;
-    }
-    .filter-btn.active .filter-card__name { color: var(--accent); }
-
-    /* All button — no thumbnail */
-    .filter-btn--all {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .filter-btn--all .filter-card__name {
-      position: static;
-      font-size: 0.65rem;
-      color: var(--text-muted);
-      text-align: center;
-    }
-    .filter-btn--all:hover .filter-card__name { color: var(--text-primary); }
-    .filter-btn--all.active .filter-card__name { color: var(--accent); }
 
     /* ---- Grid ---- */
     .portfolio-section {
@@ -168,7 +92,7 @@
     .portfolio-card__thumb-fallback {
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+      background: #111;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -364,40 +288,14 @@
   <!-- FILTERS -->
   <div class="filters">
     <div class="container">
-      <div class="filters__grid">
-        <button class="filter-btn filter-btn--all active" data-filter="all">
-          <span class="filter-card__name">All Work</span>
-        </button>
-        <button class="filter-btn" data-filter="corporate" data-thumb-id="1176162412">
-          <div class="filter-card__thumb"></div>
-          <div class="filter-card__overlay"></div>
-          <span class="filter-card__name">Corporate Videos</span>
-        </button>
-        <button class="filter-btn" data-filter="social" data-thumb-id="1137218762">
-          <div class="filter-card__thumb"></div>
-          <div class="filter-card__overlay"></div>
-          <span class="filter-card__name">Social Media</span>
-        </button>
-        <button class="filter-btn" data-filter="explainer" data-thumb-id="848379677">
-          <div class="filter-card__thumb"></div>
-          <div class="filter-card__overlay"></div>
-          <span class="filter-card__name">Explainer Videos</span>
-        </button>
-        <button class="filter-btn" data-filter="event" data-thumb-id="979177694">
-          <div class="filter-card__thumb"></div>
-          <div class="filter-card__overlay"></div>
-          <span class="filter-card__name">Event Coverage</span>
-        </button>
-        <button class="filter-btn" data-filter="demo" data-thumb-id="882139298">
-          <div class="filter-card__thumb"></div>
-          <div class="filter-card__overlay"></div>
-          <span class="filter-card__name">Demo Videos</span>
-        </button>
-        <button class="filter-btn" data-filter="motion" data-thumb-id="800969421">
-          <div class="filter-card__thumb"></div>
-          <div class="filter-card__overlay"></div>
-          <span class="filter-card__name">Motion Design</span>
-        </button>
+      <div class="filters__tabs">
+        <button class="filter-tab active" data-filter="all">All</button>
+        <button class="filter-tab" data-filter="corporate">Corporate</button>
+        <button class="filter-tab" data-filter="social">Social</button>
+        <button class="filter-tab" data-filter="explainer">Explainer</button>
+        <button class="filter-tab" data-filter="event">Event</button>
+        <button class="filter-tab" data-filter="demo">Demo</button>
+        <button class="filter-tab" data-filter="motion">Motion</button>
       </div>
     </div>
   </div>
@@ -646,13 +544,13 @@
   <script src="js/main.js"></script>
   <script>
     // ---- Filter logic ----
-    const filterBtns = document.querySelectorAll('.filter-btn');
+    const filterTabs = document.querySelectorAll('.filter-tab');
     const cards = document.querySelectorAll('.portfolio-card');
 
     function applyFilter(filter) {
-      filterBtns.forEach(b => b.classList.remove('active'));
-      const activeBtn = document.querySelector(`.filter-btn[data-filter="${filter}"]`);
-      if (activeBtn) activeBtn.classList.add('active');
+      filterTabs.forEach(b => b.classList.remove('active'));
+      const activeTab = document.querySelector(`.filter-tab[data-filter="${filter}"]`);
+      if (activeTab) activeTab.classList.add('active');
 
       cards.forEach(card => {
         if (filter === 'all' || card.dataset.category === filter) {
@@ -663,25 +561,13 @@
       });
     }
 
-    filterBtns.forEach(btn => {
-      btn.addEventListener('click', () => applyFilter(btn.dataset.filter));
+    filterTabs.forEach(tab => {
+      tab.addEventListener('click', () => applyFilter(tab.dataset.filter));
     });
 
     // Apply filter from URL param e.g. portfolio.html?filter=corporate
     const urlFilter = new URLSearchParams(window.location.search).get('filter');
     if (urlFilter) applyFilter(urlFilter);
-
-    // ---- Load Vimeo thumbnails for filter cards ----
-    document.querySelectorAll('.filter-btn[data-thumb-id]').forEach(btn => {
-      const id = btn.dataset.thumbId;
-      fetch(`https://vimeo.com/api/v2/video/${id}.json`)
-        .then(r => r.json())
-        .then(data => {
-          const src = data[0]?.thumbnail_large || data[0]?.thumbnail_medium;
-          if (src) btn.querySelector('.filter-card__thumb').style.backgroundImage = `url(${src})`;
-        })
-        .catch(() => {});
-    });
 
     // ---- Load Vimeo thumbnails for portfolio cards ----
     cards.forEach(card => {
