@@ -48,37 +48,19 @@ if (location.protocol === 'http:' && location.hostname !== 'localhost' && locati
   const CONSENT_KEY = 'wb_cookie_consent';
   const consent = localStorage.getItem(CONSENT_KEY);
 
-  function loadAnalytics() {
-    // Replace G-XXXXXXXXXX with your Google Analytics 4 Measurement ID
-    const GA_ID = 'G-XXXXXXXXXX';
-    if (GA_ID === 'G-XXXXXXXXXX') return; // placeholder — no ID set yet
-    const s = document.createElement('script');
-    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
-    s.async = true;
-    document.head.appendChild(s);
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    window.gtag = gtag;
-    gtag('js', new Date());
-    gtag('config', GA_ID, { anonymize_ip: true });
-  }
-
-  if (consent === 'accepted') {
-    loadAnalytics();
-    return;
-  }
-
   if (consent === 'declined') return;
 
   // Show banner
   const banner = document.getElementById('cookieBanner');
   if (!banner) return;
-  banner.classList.remove('hidden');
+
+  if (consent !== 'accepted') {
+    banner.classList.remove('hidden');
+  }
 
   document.getElementById('cookieAccept').addEventListener('click', function () {
     localStorage.setItem(CONSENT_KEY, 'accepted');
     banner.classList.add('hidden');
-    loadAnalytics();
   });
 
   document.getElementById('cookieDecline').addEventListener('click', function () {
